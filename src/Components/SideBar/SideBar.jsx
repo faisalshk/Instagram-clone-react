@@ -21,7 +21,9 @@ const SideBar = () => {
     { icon: <CreatePostLogo />, text: "Create Post" },
     {
       //Avatar is the UI conponent of chakra which is used for profile image.
-      icon: <Avatar size={"sm"} name="Burak Orkmez" src="./profilepic.png" />,
+      icon: (
+        <Avatar size={"sm"} name="Faisal_Suleman" src="./Profile Image.jpeg" />
+      ),
       text: "profile",
       link: "/faisal",
     },

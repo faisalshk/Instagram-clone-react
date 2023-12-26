@@ -6,6 +6,8 @@ import { useLocation } from "react-router-dom";
 const PageLayout = ({ children }) => {
   // this hook is used to give the path of the page we navigate to
   const { pathname } = useLocation();
+
+  //Instead of adding a sidebar component at every page,we can add it only once to the page layout component and wrap the children within it. This way we can have the sidebar on every page except the Auth Page.
   return (
     <Flex>
       {/* side bar on the left  */}
