@@ -2,13 +2,17 @@ import { Box, Grid, Skeleton, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ProfilePost from "./ProfilePost";
 
+// Profile posts comonent whith sekelton loaders
+
 const ProfilePosts = () => {
   const [isLoading, setisLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setisLoading(false);
     }, 2000);
   }, []);
+
   return (
     <Grid
       templateColumns={{

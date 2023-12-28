@@ -4,6 +4,8 @@ import ProfileHeader from "../../Components/Profile/ProfileHeader";
 import ProfileTabs from "../../Components/Profile/ProfileTabs";
 import ProfilePosts from "../../Components/Profile/ProfilePosts";
 
+//Profile Page Component
+
 const ProfilePage = () => {
   return (
     <Container maxW={"container.lg"} p={5}>
@@ -25,7 +27,9 @@ const ProfilePage = () => {
         // borderColor={"whiteAlpha.500"}
         direction={"column"}
       >
+        {/* Profiletabs */}
         <ProfileTabs />
+        {/* ProfilePosts */}
         <ProfilePosts />
       </Flex>
     </Container>

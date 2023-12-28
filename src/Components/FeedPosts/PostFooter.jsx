@@ -16,7 +16,7 @@ import {
 
 //This Component renders the post footer.
 
-const PostFooter = ({ userName }) => {
+const PostFooter = ({ userName, isProfilePage }) => {
   // useState for liked post
   const [liked, setLiked] = useState(false);
   //useState for number of likes
@@ -32,7 +32,7 @@ const PostFooter = ({ userName }) => {
     }
   };
   return (
-    <Box mb={10}>
+    <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} w={"full"} p={0} mb={2} mt={4} gap={4}>
         {/* onClick on the like button to like and unlike the post */}
         <Box onClick={handleLiked} cursor={"pointer"} fontSize={18}>
@@ -46,17 +46,22 @@ const PostFooter = ({ userName }) => {
       <Text fontWeight={600} fontSize={"sm"}>
         {likes} likes
       </Text>
-      <Text fontSize={"sm"} fontWeight={700}>
-        {userName}
-        {/* The as tag makes the Text tag to span, if we do not use the as attribute the text tag will act as a praragraph. */}
-        <Text as={"span"} fontWeight={400}>
-          {" "}
-          Alhumdulliah for everything!!
-        </Text>
-      </Text>
-      <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
-        View all 1,000 comments
-      </Text>
+      {!isProfilePage && (
+        <>
+          <Text fontSize={"sm"} fontWeight={700}>
+            {userName}
+            {/* The as tag makes the Text tag to span, if we do not use the as attribute the text tag will act as a praragraph. */}
+            <Text as={"span"} fontWeight={400}>
+              {" "}
+              Alhumdulliah for everything!!
+            </Text>
+          </Text>
+          <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+            View all 1,000 comments
+          </Text>
+        </>
+      )}
+
       <Flex
         alignItems={"center"}
         justifyContent={"space-between"}
