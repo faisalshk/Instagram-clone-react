@@ -1,6 +1,6 @@
-import { Avatar, Box, Flex, Link, Tooltip } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Link, Tooltip } from "@chakra-ui/react";
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Router, Link as RouterLink } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import {
@@ -10,6 +10,10 @@ import {
   NotificationsLogo,
   SearchLogo,
 } from "../../assest/Constants";
+import useLogout from "../../hooks/useLogout";
+
+// this is the sidebar component
+// this component is a reusable component.
 
 const SideBar = () => {
   // this is the side bar menu object
@@ -29,6 +33,9 @@ const SideBar = () => {
     },
   ];
 
+  //Using logout hook
+  const { handleLogout, isLoggingout, error } = useLogout();
+
   return (
     <Box
       height={"100vh"}
@@ -41,7 +48,7 @@ const SideBar = () => {
       px={{ base: 2, md: 4 }}
     >
       <Flex direction={"column"} gap={10} height={"full"} w={"full"}>
-        {/* import the link as router link so that we can add style to it like a normal cahkra component */}
+        {/* import the link as router link so that we can add style to it like a normal cahkra component and also we will be able to navigate between pages. */}
         {/* insta logo */}
         <Link
           to={"/"}
@@ -82,9 +89,9 @@ const SideBar = () => {
             >
               <Link
                 display={"flex"}
-                alignItems={"center"}
                 to={item.link || null}
                 as={RouterLink}
+                alignItems={"center"}
                 gap={4}
                 _hover={{
                   bg: "whiteAlpha.400",
@@ -100,6 +107,8 @@ const SideBar = () => {
             </Tooltip>
           ))}
         </Flex>
+
+        {/* Logout */}
         <Tooltip
           hasArrow
           label={"Logout"}
@@ -108,11 +117,9 @@ const SideBar = () => {
           openDelay={500}
           display={{ base: "block", md: "none" }}
         >
-          <Link
-            display={"flex"}
+          <Flex
+            onClick={() => handleLogout()}
             alignItems={"center"}
-            to={"/auth"}
-            as={RouterLink}
             gap={4}
             _hover={{
               bg: "whiteAlpha.400",
@@ -124,8 +131,15 @@ const SideBar = () => {
             mt={"auto"}
           >
             <BiLogOut size={25} />
-            <Box display={{ base: "none", md: "block" }}>Logout</Box>
-          </Link>
+            <Button
+              display={{ base: "none", md: "block" }}
+              variant={"ghost"}
+              _hover={{ bg: "transparent" }}
+              isLoading={isLoggingout}
+            >
+              Logout
+            </Button>
+          </Flex>
         </Tooltip>
       </Flex>
     </Box>

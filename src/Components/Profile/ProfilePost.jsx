@@ -126,9 +126,10 @@ const ProfilePost = ({ img }) => {
                     <MdDelete size={20} cursor="pointer" />
                   </Box>
                 </Flex>
-                {/* divider */}
+                {/* divider, this will display a line dividing flex and the stack */}
                 <Divider my={4} bg={"gray.500"} />
 
+                {/* overflowY auto displays the scrollbar when the content inside the stack execeds the given height */}
                 <VStack
                   w={"full"}
                   alignItems={"start"}
