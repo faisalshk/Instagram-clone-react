@@ -6,7 +6,8 @@ import useauthStore from "../store/authStore";
 
 // logout hook
 const useLogout = () => {
-  // using the signout from react-firebase-hooks
+  // using the signout from react-firebase-hooks to signput the user from firebase
+  //ref:
   const [signOut, isLoggingout, error] = useSignOut(auth);
   const showToast = useShowToast();
 
@@ -23,7 +24,6 @@ const useLogout = () => {
       //this logout will set the user state to null
       userLogout();
     } catch (error) {
-      console.log(error);
       showToast("Error", error.message, "error");
     }
   };

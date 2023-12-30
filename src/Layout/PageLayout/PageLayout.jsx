@@ -17,11 +17,11 @@ const PageLayout = ({ children }) => {
   const [user, loading] = useAuthState(auth);
 
   //checking when sould we render the sidebar
-  const canRenderSidebar = pathname !== "./auth" && user;
+  const canRenderSidebar = pathname !== "/auth" && user;
 
   //checking when should we render the navbar
   //render the navbar if there is no user, no background loading and if we are not in auth page
-  const canRenderNavbar = !user && !loading && pathname !== "./auth";
+  const canRenderNavbar = !user && !loading && pathname !== "/auth";
 
   //display the page layout spinner
   // if there is no user and the loading state is true, the loading will be true while the user is being fetch from the background and at the time of fetching the user is also empty, after fetching is done he user will hold a value
