@@ -1,4 +1,11 @@
-import { doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { auth, firestore } from "../firebase/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import useShowToast from "./useShowToast";
@@ -25,6 +32,24 @@ const SignupWithemailAndPassword = () => {
       showToast("Error", "Please fill all the fields!!", "error");
       return;
     }
+
+    // Checking if the userName is already taken or not, using firestore querys
+    //ref: https://firebase.google.com/docs/firestore/query-data/queries#simple_queries
+    // storing the users collection from firestore db into userRef
+    const userRef = collection(firestore, "users");
+    // Create a query against the collection.
+    // initilizing the query Select userRef where userName==input.userName
+    // this query will return the userName which is equal to userName entered into the signup form
+    const q = query(userRef, where("userName", "==", input.userName));
+
+    // the getDocs() method is used to retrive he result of the query
+    const querySnapshot = await getDocs(q);
+    // if query is not empty display the toast.
+    if (!querySnapshot.empty) {
+      showToast("Erroe", "Username already taken", "error");
+      return;
+    }
+
     try {
       //creating a new user
       const newUser = await createUserWithEmailAndPassword(

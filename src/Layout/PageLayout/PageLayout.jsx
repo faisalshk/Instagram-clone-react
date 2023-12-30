@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Spinner } from "@chakra-ui/react";
 import React from "react";
 import SideBar from "../../Components/SideBar/SideBar";
 import { useLocation } from "react-router-dom";
@@ -14,16 +14,19 @@ const PageLayout = ({ children }) => {
 
   // using the authstate hook form react-firebase-hooks to check if there is a user or not
   // the user will be null if we are not authenticated, else the user will hold the user value after authentication
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
+  //checking when sould we render the sidebar
   const canRenderSidebar = pathname !== "./auth" && user;
 
+  //checking when should we render the navbar
   //render the navbar if there is no user, no background loading and if we are not in auth page
   const canRenderNavbar = !user && !loading && pathname !== "./auth";
 
   //display the page layout spinner
   // if there is no user and the loading state is true, the loading will be true while the user is being fetch from the background and at the time of fetching the user is also empty, after fetching is done he user will hold a value
   const checkingUserisAuth = !user && loading;
+  // if the internet connection is slow the check will take a long time at that point we will show a spinner
   if (checkingUserisAuth) return <PageLayoutSpinner />;
 
   //Instead of adding a sidebar component at every page, we can add it only once to the page layout component and wrap the children within it. This way we can have the sidebar on every page except the Auth Page.
@@ -70,3 +73,16 @@ const PageLayout = ({ children }) => {
 };
 
 export default PageLayout;
+
+const PageLayoutSpinner = () => {
+  return (
+    <Flex
+      flexDir={"column"}
+      h={"100vh"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      <Spinner size={"xl"}></Spinner>
+    </Flex>
+  );
+};
