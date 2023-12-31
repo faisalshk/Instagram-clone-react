@@ -29,7 +29,7 @@ const useLogin = () => {
         input.email,
         input.password
       );
-      //if user exists then retrive the user datas
+      //if user exists then retrive the user data
       if (userCred) {
         // getting the user Document from firebase
         // the doc() method takes in the db i.e. firestore, the collection i.e. user, and the id
@@ -40,7 +40,7 @@ const useLogin = () => {
         //set the user data into the localstorge
         localStorage.setItem("user-info", JSON.stringify(docSnap.data()));
         //updating the login state
-        //this will update the user state globally.
+        //this will update the user state globally. and populate the user with the user data.
         loginUser(docSnap.data());
       }
     } catch (error) {

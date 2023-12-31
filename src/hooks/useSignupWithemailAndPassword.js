@@ -17,6 +17,7 @@ import useauthStore from "../store/authStore";
 const SignupWithemailAndPassword = () => {
   // this usestate is taken from react firebase hooks which gives different states.
   // the useCreateUserWithEmailAndPassword takes the auth which is imported from the firebase config file.
+  // ref: https://github.com/CSFrequency/react-firebase-hooks/tree/master/auth#usecreateuserwithemailandpassword
   const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 

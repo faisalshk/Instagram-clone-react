@@ -9,6 +9,8 @@ const SuggestedHeaders = () => {
   //getting he user data from the global user state
   const authUser = useauthStore((state) => state.user);
 
+  // to avoid any possible error when authUser is null.
+  if (!authUser) return null;
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
       <Flex alignItems={"center"} gap={2}>
