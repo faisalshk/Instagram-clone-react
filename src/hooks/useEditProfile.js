@@ -37,28 +37,28 @@ const useEditProfile = () => {
         await uploadString(storageRef, selectedFile, "data_url");
         // getting the uploaded data from storage and storing it in the URl var to update the users.profilePicUrl in firestore
         URL = await getDownloadURL(ref(storage, `profilePics/${authUser.uid}`));
-
-        // only updating the fullName,userName,bio and profile pic rest all the data will not get updated
-        // this will happen when the user edits the profile.
-        const updatedUser = {
-          ...authUser,
-          fullName: input.fullName || authUser.fullName,
-          username: input.userName || authUser.userName,
-          bio: input.bio || authUser.bio,
-          profilePicUrl: URL || authUser.profilePicUrl,
-        };
-
-        // updating the userDoc with updateUser objec
-        await updateDoc(userDocRef, updatedUser);
-        // setting the updated user in the local-storage
-        localStorage.setItem("user-info", JSON.stringify(updatedUser));
-        //updating the authenticated user state
-        setauthUser(updatedUser);
-        //updating the user profile state.
-        setUserProfile(updatedUser);
-
-        showToast("Success", "Profile Updated Sucessfully", "success");
       }
+
+      // only updating the fullName,userName,bio and profile pic rest all the data will not get updated
+      // this will happen when the user edits the profile.
+      const updatedUser = {
+        ...authUser,
+        fullName: input.fullName || authUser.fullName,
+        username: input.userName || authUser.userName,
+        bio: input.bio || authUser.bio,
+        profilePicUrl: URL || authUser.profilePicUrl,
+      };
+
+      // updating the userDoc with updateUser objec
+      await updateDoc(userDocRef, updatedUser);
+      // setting the updated user in the local-storage
+      localStorage.setItem("user-info", JSON.stringify(updatedUser));
+      //updating the authenticated user state
+      setauthUser(updatedUser);
+      //updating the user profile state.
+      setUserProfile(updatedUser);
+
+      showToast("Success", "Profile Updated Sucessfully", "success");
     } catch (error) {
       showToast("Error", error.message, "error");
     }
