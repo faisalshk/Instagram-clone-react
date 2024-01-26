@@ -17,6 +17,7 @@ const useauthStore = create((set) => ({
   logout: () => set({ user: null }),
 
   //setter function
+  // this function will be used when we update the userdata
   setUser: (user) => set({ user }),
 }));
 
