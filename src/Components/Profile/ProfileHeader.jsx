@@ -8,16 +8,21 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import userProfileStore from "../../store/useUserProfileStore";
 import useauthStore from "../../store/authStore";
 import EditProfile from "./EditProfile";
+import useFollowUser from "../../hooks/useFollowUser";
+import useUserProfileStore from "../../store/useUserProfileStore";
 
 const ProfileHeader = () => {
-  const { userProfile } = userProfileStore();
+  const { userProfile } = useUserProfileStore();
   //checking if the user is visiting it's own profile
   // if the user is visiting it's own profile show the edit button or if the user is visiting someone else profile show he follow button
   // getting the authenticated user
   const authuser = useauthStore((state) => state.user);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  console.log(userProfile.uid);
+  const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(userProfile?.uid);
 
   const visitingOwnProfileandAuth =
     authuser && authuser.userName === userProfile.userName;
@@ -26,7 +31,6 @@ const ProfileHeader = () => {
     authuser && authuser.userName !== userProfile.userName;
 
   // chakra UI modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex
@@ -72,14 +76,16 @@ const ProfileHeader = () => {
             </Flex>
           )}
           {visitingAnotherProfileandAuth && (
-            <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
+            <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
               <Button
                 bg={"blue.500"}
                 color={"white"}
                 _hover={{ bg: "blue.600" }}
                 size={{ base: "xs", md: "sm" }}
+                onClick={handleFollowUser}
+                isLoading={isUpdating}
               >
-                Follow
+                {isFollowing ? "Unfollow" : "Follow"}
               </Button>
             </Flex>
           )}

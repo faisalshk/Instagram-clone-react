@@ -3,12 +3,12 @@ import useShowToast from "./useShowToast";
 import { useEffect } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
-import userProfileStore from "../store/useUserProfileStore";
+import useUserProfileStore from "../store/useUserProfileStore";
 
 const useGetUserProfileByUsername = (userName) => {
   const [isLoading, setisLoading] = useState(true);
   const showToast = useShowToast();
-  const { userProfile, setUserProfile } = userProfileStore();
+  const { userProfile, setUserProfile } = useUserProfileStore();
 
   // this will get the user Profile data by the username, with the help of query
   useEffect(() => {

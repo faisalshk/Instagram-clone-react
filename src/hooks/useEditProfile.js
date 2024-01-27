@@ -44,7 +44,7 @@ const useEditProfile = () => {
       const updatedUser = {
         ...authUser,
         fullName: input.fullName || authUser.fullName,
-        username: input.userName || authUser.userName,
+        userName: input.userName || authUser.userName,
         bio: input.bio || authUser.bio,
         profilePicUrl: URL || authUser.profilePicUrl,
       };
