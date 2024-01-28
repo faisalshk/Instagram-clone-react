@@ -40,7 +40,7 @@ const SignupWithemailAndPassword = () => {
     const userRef = collection(firestore, "users");
     // Create a query against the collection.
     // initilizing the query Select userRef where userName==input.userName
-    // this query will return the userName which is equal to userName entered into the signup form
+    // this query will return the userName data which is equal to userName entered into the signup form
     const q = query(userRef, where("userName", "==", input.userName));
 
     // the getDocs() method is used to retrive he result of the query
