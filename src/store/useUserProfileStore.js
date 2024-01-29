@@ -12,7 +12,7 @@ const useUserProfileStore = create((set) => ({
     set((state) => ({
       userProfile: {
         ...state.userProfile,
-        posts: [post.id, ...state.userProfile.posts],
+        post: [post.id, ...state.userProfile.post],
       },
     })),
 }));
