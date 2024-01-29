@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Flex,
   GridItem,
@@ -14,17 +15,65 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
+import useUserProfileStore from "../../store/useUserProfileStore";
+import usePostStore from "../../store/usePostStore";
+import useShowToast from "../../hooks/useShowToast";
+import useauthStore from "../../store/authStore";
+import { deleteObject, ref } from "firebase/storage";
+import { firestore, storage } from "../../firebase/firebase";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 // posts component with modal overlay and also modal which shows the post, likes and comments
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const userProfile = useUserProfileStore((state) => state.userProfile);
+  const authUser = useauthStore((state) => state.user);
+  const deletePost = usePostStore((state) => state.deletePost);
+
+  const [isDeleting, setIsDeleting] = useState(false);
+  const showToast = useShowToast();
+
+  const handleDeletePost = async () => {
+    // this will pop up an confirmation message passed into the confirm() if the user clicks cancel we will return out of the function
+    if (!window.confirm("Are you sure you want to delete the post!!")) return;
+    if (isDeleting) return;
+    try {
+      // First we are going to delete the Image from the storage->post
+      //then we will delete the post from the posts collection
+      //then we will delete the post which is in the users collection
+
+      const imageRef = ref(storage, `posts/${post.id}`);
+      //this will be the image we want to delete from the storage
+      await deleteObject(imageRef);
+
+      //this userRef will be used to update the users collection
+      const userRef = doc(firestore, "users", authUser.uid);
+
+      //deleting the post from the posts collection
+      await deleteDoc(doc(firestore, "posts", post.id));
+
+      //deleteing the post from the post array which is in the users collection
+      await updateDoc(userRef, {
+        post: arrayRemove(post.id),
+      });
+
+      //this will update the global post state
+      deletePost(post.id);
+      showToast("Success", "Post Deleted Successfully", "success");
+    } catch (error) {
+      showToast("Error", error.message, "error");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <>
       {/* modal opens when the user clicks the grid item */}
@@ -56,19 +105,19 @@ const ProfilePost = ({ img }) => {
             <Flex>
               <AiFillHeart size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                7
+                {post.likes.length}
               </Text>
             </Flex>
             <Flex>
               <FaComment size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                10
+                {post.comments.length}
               </Text>
             </Flex>
           </Flex>
         </Flex>
         <Image
-          src={img}
+          src={post.imageUrl}
           w={"100%"}
           h={"100%"}
           objectFit={"cover"}
@@ -99,7 +148,7 @@ const ProfilePost = ({ img }) => {
                 overflow={"hidden"}
                 flex={1.5}
               >
-                <Image src={img} alt="profile post"></Image>
+                <Image src={post.imageUrl} alt="profile post"></Image>
               </Box>
               <Flex
                 flex={1}
@@ -110,21 +159,26 @@ const ProfilePost = ({ img }) => {
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                   <Flex alignItems={"center"} gap={2}>
                     <Avatar
-                      src="./Profile Image.jpeg"
+                      src={userProfile.profilePicUrl}
                       size={"sm"}
                       name="faisal suleman"
                     ></Avatar>
                     <Text fontSize={12} fontWeight={"bold"}>
-                      Faisal_suleman
+                      {userProfile.userName}
                     </Text>
                   </Flex>
-                  <Box
-                    _hover={{ bg: "whiteAlpha.300", color: "red.700" }}
-                    borderRadius={4}
-                    padding={1}
-                  >
-                    <MdDelete size={20} cursor="pointer" />
-                  </Box>
+                  {/* delete button */}
+                  {authUser?.uid === userProfile.uid && (
+                    <Button
+                      _hover={{ bg: "whiteAlpha.300", color: "red.700" }}
+                      borderRadius={4}
+                      padding={1}
+                      onClick={handleDeletePost}
+                      isLoading={isDeleting}
+                    >
+                      <MdDelete size={20} cursor="pointer" />
+                    </Button>
+                  )}
                 </Flex>
                 {/* divider, this will display a line dividing flex and the stack */}
                 <Divider my={4} bg={"gray.500"} />

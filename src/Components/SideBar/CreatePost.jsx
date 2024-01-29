@@ -161,8 +161,9 @@ const useCreatePost = function () {
     const { pathname } = useLocation()
 
     const handleCreatePost = async function (selectedFile, caption) {
-        // if no selected file throw the error
+        // if loading state is true and user still clicks the post button to avoid overloading we just return out of the function
         if (isLoading) return;
+        // if no selected file throw the error
         if (!selectedFile) {
             throw new Error('Please Select an Image')
         }
