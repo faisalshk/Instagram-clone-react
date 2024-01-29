@@ -25,7 +25,7 @@ const usePreviewimg = () => {
         return;
       }
 
-      // this hook is use to read the file
+      // this hook is use to read the file this is react hook
       const reader = new FileReader();
 
       reader.onloadend = () => {

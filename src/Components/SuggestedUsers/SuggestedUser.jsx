@@ -11,6 +11,7 @@ const SuggestedUser = ({ user, setUser }) => {
   const onFollowUser = async () => {
     await handleFollowUser()
 
+    //update the user state
     setUser({
       ...user,
       followers: isFollowing ? user.followers.filter(follower => {

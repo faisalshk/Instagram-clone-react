@@ -21,7 +21,7 @@ const ProfileHeader = () => {
   const authuser = useauthStore((state) => state.user);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(userProfile.uid);
+
   const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(userProfile?.uid);
 
   const visitingOwnProfileandAuth =
@@ -50,7 +50,9 @@ const ProfileHeader = () => {
           alt="Faisal Suleman pic logo"
         />
       </AvatarGroup>
+
       <VStack alignItems={"start"} gap={2} mx={"auto"} flex={1}>
+
         <Flex
           gap={4}
           direction={{ base: "colum", sm: "row" }}
@@ -58,9 +60,11 @@ const ProfileHeader = () => {
           alignItems={"center"}
           w={"full"}
         >
+
           <Text fontSize={{ base: "sm", md: "lg" }}>
             {userProfile.userName}
           </Text>
+
           {/* if user is visiting it's own profile then show the edit button */}
           {visitingOwnProfileandAuth && (
             <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
@@ -75,6 +79,7 @@ const ProfileHeader = () => {
               </Button>
             </Flex>
           )}
+
           {visitingAnotherProfileandAuth && (
             <Flex gap={4} alignItems={"center"} justifyContent={"center"}>
               <Button
@@ -89,20 +94,25 @@ const ProfileHeader = () => {
               </Button>
             </Flex>
           )}
+
         </Flex>
+
         <Flex alignItems={"center"} gap={{ base: 2, sm: 4 }}>
+
           <Text fontSize={{ base: "xs", md: "sm" }}>
             <Text as={"span"} fontWeight={"bold"} mr={1}>
               {userProfile.post.length}
             </Text>
             Posts
           </Text>
+
           <Text fontSize={{ base: "xs", md: "sm" }}>
             <Text as={"span"} fontWeight={"bold"} mr={1}>
               {userProfile.followers.length}
             </Text>
             Followers
           </Text>
+
           <Text fontSize={{ base: "xs", md: "sm" }}>
             <Text as={"span"} fontWeight={"bold"} mr={1}>
               {userProfile.following.length}
@@ -110,15 +120,18 @@ const ProfileHeader = () => {
             Following
           </Text>
         </Flex>
+
         <Flex alignItems={"center"} gap={4}>
           <Text fontSize={"sm"} fontWeight={"bold"}>
             {userProfile.fullName}
           </Text>
         </Flex>
+
         <Text fontSize={"sm"} letterSpacing={1}>
           {userProfile.bio}
         </Text>
       </VStack>
+
       {/* if modal is open render this component */}
       {isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
     </Flex>

@@ -10,6 +10,7 @@ const useSearchUser = () => {
 
   const getUserProfile = async (userName) => {
     setIsLoading(true);
+    setUser(null);
     try {
       // initilizing a query to get the data of the user
       // select users where userName == UserName
