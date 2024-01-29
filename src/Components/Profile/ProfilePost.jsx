@@ -37,6 +37,8 @@ const ProfilePost = ({ post }) => {
   const authUser = useauthStore((state) => state.user);
   const deletePost = usePostStore((state) => state.deletePost);
 
+  const decrementPostCounter = useUserProfileStore(state => state.deletePost)
+
   const [isDeleting, setIsDeleting] = useState(false);
   const showToast = useShowToast();
 
@@ -64,8 +66,11 @@ const ProfilePost = ({ post }) => {
         post: arrayRemove(post.id),
       });
 
-      //this will update the global post state
+      //this will update the global post state and delete the post from the proile
       deletePost(post.id);
+      //update the profile state and also update the post count
+      decrementPostCounter(post.id)
+
       showToast("Success", "Post Deleted Successfully", "success");
     } catch (error) {
       showToast("Error", error.message, "error");
