@@ -16,7 +16,6 @@ const Search = () => {
         getUserProfile(searchRef.current.value)
 
     }
-    console.log(user)
 
     return (
         <>

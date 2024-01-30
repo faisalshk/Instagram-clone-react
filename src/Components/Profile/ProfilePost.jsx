@@ -32,6 +32,11 @@ import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 // posts component with modal overlay and also modal which shows the post, likes and comments
 
 const ProfilePost = ({ post }) => {
+
+  post.comments.map(comment => {
+    console.log(comment.id)
+  })
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useUserProfileStore((state) => state.userProfile);
   const authUser = useauthStore((state) => state.user);
@@ -196,29 +201,16 @@ const ProfilePost = ({ post }) => {
                   overflowY={"auto"}
                 >
                   {/* comment component */}
-                  <Comment
-                    username={"faisal"}
-                    createdAt={"1d ago."}
-                    profilePic={"./profilepic.png"}
-                    text={"dummy image from unsplash"}
-                  />
-                  <Comment
-                    username={"Natasha"}
-                    createdAt={"1d ago."}
-                    profilePic={"./img3.png"}
-                    text={"nice pic!!"}
-                  />
-                  <Comment
-                    username={"Bravo"}
-                    createdAt={"1d ago."}
-                    profilePic={"./img2.png"}
-                    text={"nice clone dude"}
-                  />
+                  {/* mappin over the comments array in the post  */}
+                  {post.comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
+                  ))}
                 </VStack>
 
                 <Divider my={4} bg={"gray.800"} />
                 {/* component reused */}
-                <PostFooter isProfilePage={true} />
+                {/* postfooter component */}
+                <PostFooter isProfilePage={true} post={post} />
               </Flex>
             </Flex>
           </ModalBody>

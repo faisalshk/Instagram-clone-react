@@ -3,6 +3,8 @@ import useShowToast from "./useShowToast";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 
+//this hook is used to search for a specific user by the userName
+
 const useSearchUser = () => {
   const [IsLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);

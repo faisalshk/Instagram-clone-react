@@ -1,20 +1,38 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Skeleton, SkeletonCircle, Text } from "@chakra-ui/react";
 import React from "react";
+import useGetuserProfileById from "../../hooks/useGetuserProfileById";
+// import { timeAgo } from "../../utils/timeAgo";
+
+import { Link } from "react-router-dom";
 //comment component
 
-const Comment = ({ createdAt, profilePic, username, text }) => {
+const Comment = ({ comment }) => {
+
+  //this hook will get the profile data of the user who has commented on the post by taking in the Id of the user who has commented
+  const { userProfile, isLoading } = useGetuserProfileById(comment.createdBy)
+
+  if (isLoading) return <CommentSkeleton />;
   return (
     <Flex gap={4}>
-      <Avatar src={profilePic} name={username} size={"sm"} />
+      {/* navigate to the user who has commented */}
+      <Link to={`/${userProfile.userName}`}>
+        <Avatar src={userProfile.profilePicUrl} size={"sm"} />
+      </Link>
+
       <Flex direction={"column"}>
-        <Flex gap={2}>
-          <Text fontWeight={"bold"} fontSize={12}>
-            {username}
-          </Text>
-          <Text fontSize={14}>{text}</Text>
+        <Flex gap={2} alignItems={"center"}>
+
+          <Link to={`/${userProfile.userName}`}>
+            <Text fontWeight={"bold"} fontSize={12}>
+              {userProfile.userName}
+            </Text>
+          </Link>
+
+          <Text fontSize={14}>{comment.comment}</Text>
         </Flex>
+
         <Text fontSize={12} color={"gray"}>
-          {createdAt}
+          {/* {timeAgo(comment.createdAt)} */}
         </Text>
       </Flex>
     </Flex>
@@ -22,3 +40,15 @@ const Comment = ({ createdAt, profilePic, username, text }) => {
 };
 
 export default Comment;
+
+const CommentSkeleton = () => {
+  return (
+    <Flex gap={4} w={"full"} alignItems={"center"}>
+      <SkeletonCircle h={10} w='10' />
+      <Flex gap={1} flexDir={"column"}>
+        <Skeleton height={2} width={100} />
+        <Skeleton height={2} width={50} />
+      </Flex>
+    </Flex>
+  );
+};

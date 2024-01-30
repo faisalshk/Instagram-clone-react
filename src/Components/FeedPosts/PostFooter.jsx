@@ -13,14 +13,31 @@ import {
   NotificationsLogo,
   UnlikeLogo,
 } from "../../assest/Constants";
+import usePostComment from "../../hooks/usePostComment";
+import useauthStore from "../../store/authStore";
 
 //This Component renders the post footer.
 
-const PostFooter = ({ userName, isProfilePage }) => {
+const PostFooter = ({ post, userName, isProfilePage }) => {
+
+  //taking the authenticated user
+  const authUser = useauthStore(state => state.user)
+
+  const { isCommenting, handlePostComment } = usePostComment()
   // useState for liked post
   const [liked, setLiked] = useState(false);
   //useState for number of likes
   const [likes, setLikes] = useState(1000);
+  //useState for comments
+  const [comment, setComment] = useState('')
+
+  const handleSubmitcomment = async () => {
+    // this function will update the post in the posts collection by taking in the post.id to which the user is posting a comment and also the comment.
+    await handlePostComment(post.id, comment)
+    //after posting set the comment to empty string
+    setComment('')
+  }
+
   const handleLiked = () => {
     // if like is ture set the liked to false and decerease the number of likes, else set ture and increase the number of likes.
     if (liked) {
@@ -62,33 +79,40 @@ const PostFooter = ({ userName, isProfilePage }) => {
         </>
       )}
 
-      <Flex
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        w={"full"}
-        gap={2}
-      >
-        {/* InputGroup is the chakra ui element */}
-        <InputGroup>
-          <Input
-            variant={"flushed"}
-            placeholder="Add a comment...."
-            fontSize={14}
-          ></Input>
-          <InputRightElement>
-            <Button
+      {authUser && (
+        <Flex
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          w={"full"}
+          gap={2}
+        >
+          {/* InputGroup is the chakra ui element */}
+          <InputGroup>
+            <Input
+              variant={"flushed"}
+              placeholder="Add a comment...."
               fontSize={14}
-              color={"blue.500"}
-              fontWeight={600}
-              cursor={"pointer"}
-              _hover={{ color: "white" }}
-              bg={"transparent"}
-            >
-              Post
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </Flex>
+              onChange={(e) => setComment(e.target.value)}
+              value={comment}
+            ></Input>
+            <InputRightElement>
+              {/* onclick the post button to post a comment */}
+              <Button
+                fontSize={14}
+                color={"blue.500"}
+                fontWeight={600}
+                cursor={"pointer"}
+                _hover={{ color: "white" }}
+                bg={"transparent"}
+                onClick={handleSubmitcomment}
+                isLoading={isCommenting}
+              >
+                Post
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </Flex>
+      )}
     </Box>
   );
 };

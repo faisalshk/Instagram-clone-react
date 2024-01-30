@@ -4,7 +4,6 @@ import useShowToast from "./useShowToast";
 import useUserProfileStore from "../store/useUserProfileStore";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
-import { StepStatus } from "@chakra-ui/react";
 
 // this hook is used to get the post of the authenticated user
 const useGetUsersPosts = () => {

@@ -6,6 +6,7 @@ import useGetUsersPosts from "../../hooks/useGetUsersPosts";
 // Profile posts comonent whith sekelton loaders
 
 const ProfilePosts = () => {
+  //this hook is used to get all the post which is in the post array in the users collection
   const { isLoading, post } = useGetUsersPosts()
 
 
@@ -32,8 +33,9 @@ const ProfilePosts = () => {
 
       {!isLoading && (
         <>
+          {/* mapping over the post array */}
           {post.map((post) => (
-            <ProfilePost post={post} key={post.id} />
+            <ProfilePost key={post.id} post={post} />
           ))}
         </>
       )}
