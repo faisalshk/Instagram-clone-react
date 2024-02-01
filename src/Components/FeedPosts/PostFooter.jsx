@@ -7,7 +7,7 @@ import {
   Text,
   InputRightElement,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   CommentLogo,
   NotificationsLogo,
@@ -15,6 +15,7 @@ import {
 } from "../../assest/Constants";
 import usePostComment from "../../hooks/usePostComment";
 import useauthStore from "../../store/authStore";
+import useLikePost from "../../hooks/useLikePost";
 
 //This Component renders the post footer.
 
@@ -25,11 +26,15 @@ const PostFooter = ({ post, userName, isProfilePage }) => {
 
   const { isCommenting, handlePostComment } = usePostComment()
   // useState for liked post
-  const [liked, setLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
   //useState for number of likes
-  const [likes, setLikes] = useState(1000);
+  // const [likes, setLikes] = useState(1000);
   //useState for comments
   const [comment, setComment] = useState('')
+  //this useRef is used to focus the comment input when e click the comment logo
+  const commentRef = useRef(null)
+
+  const { handleLikePost, liked, likes } = useLikePost(post)
 
   const handleSubmitcomment = async () => {
     // this function will update the post in the posts collection by taking in the post.id to which the user is posting a comment and also the comment.
@@ -38,25 +43,24 @@ const PostFooter = ({ post, userName, isProfilePage }) => {
     setComment('')
   }
 
-  const handleLiked = () => {
-    // if like is ture set the liked to false and decerease the number of likes, else set ture and increase the number of likes.
-    if (liked) {
-      setLiked(false);
-      setLikes(likes - 1);
-    } else {
-      setLiked(true);
-      setLikes(likes + 1);
-    }
-  };
+  // const handleLiked = () => {
+  //   // if like is ture set the liked to false and decerease the number of likes, else set ture and increase the number of likes.
+  //   if (liked) {
+  //     setLiked(false);
+  //     setLikes(likes - 1);
+  //   } else {
+  //     setLiked(true);
+  //     setLikes(likes + 1);
+  //   }
   return (
     <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} w={"full"} p={0} mb={2} mt={4} gap={4}>
         {/* onClick on the like button to like and unlike the post */}
-        <Box onClick={handleLiked} cursor={"pointer"} fontSize={18}>
+        <Box onClick={handleLikePost} cursor={"pointer"} fontSize={18}>
           {/* the NotificationsLogo is the filled like logo  */}
           {!liked ? <NotificationsLogo /> : <UnlikeLogo />}
         </Box>
-        <Box cursor={"pointer"} fontSize={18}>
+        <Box cursor={"pointer"} fontSize={18} onClick={() => commentRef.current.focus()}>
           <CommentLogo />
         </Box>
       </Flex>
@@ -94,6 +98,7 @@ const PostFooter = ({ post, userName, isProfilePage }) => {
               fontSize={14}
               onChange={(e) => setComment(e.target.value)}
               value={comment}
+              ref={commentRef}
             ></Input>
             <InputRightElement>
               {/* onclick the post button to post a comment */}

@@ -1,9 +1,10 @@
 import { Avatar, Flex, Skeleton, SkeletonCircle, Text } from "@chakra-ui/react";
 import React from "react";
 import useGetuserProfileById from "../../hooks/useGetuserProfileById";
-// import { timeAgo } from "../../utils/timeAgo";
+
 
 import { Link } from "react-router-dom";
+import { timeAgo } from "../../utils/timeAgo";
 //comment component
 
 const Comment = ({ comment }) => {
@@ -32,7 +33,7 @@ const Comment = ({ comment }) => {
         </Flex>
 
         <Text fontSize={12} color={"gray"}>
-          {/* {timeAgo(comment.createdAt)} */}
+          {timeAgo(comment.createdAt)}
         </Text>
       </Flex>
     </Flex>

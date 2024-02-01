@@ -28,14 +28,11 @@ import useauthStore from "../../store/authStore";
 import { deleteObject, ref } from "firebase/storage";
 import { firestore, storage } from "../../firebase/firebase";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import Caption from "../Comment/Caption";
 
 // posts component with modal overlay and also modal which shows the post, likes and comments
 
 const ProfilePost = ({ post }) => {
-
-  post.comments.map(comment => {
-    console.log(comment.id)
-  })
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userProfile = useUserProfileStore((state) => state.userProfile);
@@ -200,6 +197,10 @@ const ProfilePost = ({ post }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
+                  {/* Caption component */}
+
+                  {post.caption && <Caption post={post} />}
+
                   {/* comment component */}
                   {/* mappin over the comments array in the post  */}
                   {post.comments.map((comment) => (
