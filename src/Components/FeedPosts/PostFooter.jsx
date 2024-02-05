@@ -16,10 +16,11 @@ import {
 import usePostComment from "../../hooks/usePostComment";
 import useauthStore from "../../store/authStore";
 import useLikePost from "../../hooks/useLikePost";
+import { timeAgo } from '../../utils/timeAgo'
 
 //This Component renders the post footer.
 
-const PostFooter = ({ post, userName, isProfilePage }) => {
+const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
 
   //taking the authenticated user
   const authUser = useauthStore(state => state.user)
@@ -67,19 +68,24 @@ const PostFooter = ({ post, userName, isProfilePage }) => {
       <Text fontWeight={600} fontSize={"sm"}>
         {likes} likes
       </Text>
+      {isProfilePage && (
+        <Text fontSize={12} color={'gray'}>Posted, {timeAgo(post.createdAt)}</Text>
+      )}
       {!isProfilePage && (
         <>
           <Text fontSize={"sm"} fontWeight={700}>
-            {userName}
+            {creatorProfile?.userName}
             {/* The as tag makes the Text tag to span, if we do not use the as attribute the text tag will act as a praragraph. */}
             <Text as={"span"} fontWeight={400}>
               {" "}
-              Alhumdulliah for everything!!
+              {post.caption}
             </Text>
           </Text>
-          <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
-            View all 1,000 comments
-          </Text>
+          {post.comments.length > 0 && (
+            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+              View all {post.comments.length} comments
+            </Text>
+          )}
         </>
       )}
 

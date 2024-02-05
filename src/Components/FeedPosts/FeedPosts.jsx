@@ -5,26 +5,24 @@ import {
   SkeletonCircle,
   Skeleton,
   Box,
+  Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import FeedPost from "./FeedPost";
+import useGetFeedPost from "../../hooks/useGetFeedPost";
 
 //This Component renders the Feed's Post.
 
 const FeedPosts = () => {
-  const [isLoading, setisLoading] = useState(true);
+  const { isLoading, post } = useGetFeedPost()
 
-  useEffect(() => {
-    setTimeout(() => {
-      setisLoading(false);
-    }, 2000);
-  }, []);
+
 
   return (
     <Container maxW={"container.sm"} py={10} px={2}>
       {/* rendering the skeleton loader 4 times */}
       {isLoading &&
-        [0, 1, 2, 3].map((_, index) => (
+        [0, 1, 2].map((_, index) => (
           <VStack key={index} alignItems={"flex-start"} gap={4} mb={10}>
             <Flex gap={2}>
               <SkeletonCircle size="10" />
@@ -34,29 +32,21 @@ const FeedPosts = () => {
               </VStack>
             </Flex>
             <Skeleton w={"full"}>
-              <Box h={"500px"}>content Wrapped</Box>
+              <Box h={"400px"}>content Wrapped</Box>
             </Skeleton>
           </VStack>
         ))}
       {/* giving props to the feedpost for username, post image, avatar */}
 
-      {!isLoading && (
+      {!isLoading && post.length > 0 && post.map((post) => <FeedPost key={post.id} post={post} />)}
+      {!isLoading && post.length === 0 && (
         <>
-          <FeedPost
-            img="./Profile Image.jpeg"
-            userName="Faisal_suleman"
-            avatar="./Profile Image.jpeg"
-          />
-          <FeedPost img="./img3.png" userName="Johndoe" avatar="./img3.png" />
-          <FeedPost img="./img2.png" userName="Josh" avatar="./img2.png" />
-          <FeedPost
-            img="./img1.png"
-            userName="burakorkmezz"
-            avatar="./img1.png"
-          />
+          <Text fontSize={'md'} color={'red.400'} >Dayumm, Looks like you do not have any friends!!</Text>
+          <Text color={'red.400'}>Stop Coding and go make some!!</Text>
         </>
-      )}
-    </Container>
+      )
+      }
+    </Container >
   );
 };
 
