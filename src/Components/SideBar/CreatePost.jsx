@@ -157,6 +157,7 @@ const useCreatePost = function () {
     const [isLoading, setIsLoading] = useState(false)
     const createPost = usePostStore(state => state.createPost)
     const addPost = useUserProfileStore(state => state.addPost)
+    const userProfile = useUserProfileStore(state => state.userProfile)
 
     const { pathname } = useLocation()
 
@@ -199,8 +200,14 @@ const useCreatePost = function () {
             await updateDoc(postDocRef, { imageUrl: downloadUrl })
             newPost.imageUrl = downloadUrl
 
-            createPost({ ...newPost, id: postDocRef.id })
-            addPost({ ...newPost, id: postDocRef.id })
+            //if we are in our own profile page then only create the post i.e update the post state
+            if (userProfile.uid === authUser.uid)
+                createPost({ ...newPost, id: postDocRef.id })
+
+            //if we are in the home page then do not update the profileStore and if the current user id is === to the id of the user we visit
+            // if we are in someone else profile page then do not update the profile state
+            if (pathname !== '/' && userProfile.uid === authUser.uid)
+                addPost({ ...newPost, id: postDocRef.id })
 
             showToast('Success', 'Post Created Successfully', 'success')
         } catch (error) {

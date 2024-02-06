@@ -203,8 +203,8 @@ const ProfilePost = ({ post }) => {
 
                   {/* comment component */}
                   {/* mappin over the comments array in the post  */}
-                  {post.comments.map((comment) => (
-                    <Comment key={comment.id} comment={comment} />
+                  {post.comments.map((comment, index) => (
+                    <Comment key={index} comment={comment} />
                   ))}
                 </VStack>
 

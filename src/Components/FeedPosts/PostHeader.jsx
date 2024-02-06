@@ -2,6 +2,7 @@ import { Avatar, Box, Button, Flex, Skeleton, SkeletonCircle, Text } from "@chak
 import React from "react";
 import { Link } from "react-router-dom";
 import useFollowUser from "../../hooks/useFollowUser";
+import { timeAgo } from "../../utils/timeAgo";
 
 // this component renders the post header
 
@@ -35,7 +36,7 @@ const PostHeader = ({ post, creatorProfile }) => {
             <Skeleton w={'100px'} h={'100px'} />
           )}
 
-          <Box color={"gray.500"}>. 1w</Box>
+          <Box color={"gray.500"}>. {timeAgo(post.createdAt)}</Box>
         </Flex>
       </Flex>
 

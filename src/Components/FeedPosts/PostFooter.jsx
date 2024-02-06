@@ -6,6 +6,7 @@ import {
   InputGroup,
   Text,
   InputRightElement,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import {
@@ -17,6 +18,7 @@ import usePostComment from "../../hooks/usePostComment";
 import useauthStore from "../../store/authStore";
 import useLikePost from "../../hooks/useLikePost";
 import { timeAgo } from '../../utils/timeAgo'
+import CommentsModal from "../Comment/CommentsModal";
 
 //This Component renders the post footer.
 
@@ -34,6 +36,8 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
   const [comment, setComment] = useState('')
   //this useRef is used to focus the comment input when e click the comment logo
   const commentRef = useRef(null)
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { handleLikePost, liked, likes } = useLikePost(post)
 
@@ -82,10 +86,12 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
             </Text>
           </Text>
           {post.comments.length > 0 && (
-            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"} onClick={onOpen}>
               View all {post.comments.length} comments
             </Text>
           )}
+          {/* Comment modal only in the home page */}
+          {isOpen ? <CommentsModal isOpen={isOpen} onClose={onClose} post={post} /> : null}
         </>
       )}
 
