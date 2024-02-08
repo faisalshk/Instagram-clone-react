@@ -8,37 +8,39 @@ import { firestore } from "../firebase/firebase";
 
 const useLikePost = (post) => {
   const [isUpdating, setIsUpdating] = useState(false);
-  //this state is used to keep a track of the likes array
-  const [likes, setIslikes] = useState(post.likes.length);
-  // this state is used to check if the user has already like the post or not, that is why the useState() takes in the likes array and checks if the likes array includes the user who has liked the post or not
   const authUser = useauthStore((state) => state.user);
-
-  const [liked, setIsliked] = useState(post.likes.includes(authUser?.uid));
-
+  const [likes, setLikes] = useState(post.likes.length);
+  //this state is used to keep a track of the likes array
+  const [isLiked, setIsLiked] = useState(post.likes.includes(authUser?.uid));
+  // this state is used to check if the user has already like the post or not, that is why the useState() takes in the likes array and checks if the likes array includes the user who has liked the post or not
   const showToast = useShowToast();
 
   const handleLikePost = async () => {
     if (isUpdating) return;
     if (!authUser)
-      return showToast("Error", "You must Login to like the post", "error");
+      return showToast(
+        "Error",
+        "You must be logged in to like a post",
+        "error"
+      );
     setIsUpdating(true);
 
     try {
       const postRef = doc(firestore, "posts", post.id);
-
-      updateDoc(postRef, {
-        likes: liked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid),
+      await updateDoc(postRef, {
+        likes: isLiked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid),
       });
 
-      setIsliked(!liked);
-      liked ? setIslikes(likes - 1) : setIslikes(likes + 1);
+      setIsLiked(!isLiked);
+      isLiked ? setLikes(likes - 1) : setLikes(likes + 1);
     } catch (error) {
       showToast("Error", error.message, "error");
     } finally {
       setIsUpdating(false);
     }
   };
-  return { handleLikePost, liked, likes, isUpdating };
+
+  return { isLiked, likes, handleLikePost, isUpdating };
 };
 
 export default useLikePost;

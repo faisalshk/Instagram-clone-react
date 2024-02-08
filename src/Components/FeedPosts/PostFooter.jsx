@@ -39,7 +39,7 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const { handleLikePost, liked, likes } = useLikePost(post)
+  const { handleLikePost, isLiked, likes } = useLikePost(post);
 
   const handleSubmitcomment = async () => {
     // this function will update the post in the posts collection by taking in the post.id to which the user is posting a comment and also the comment.
@@ -63,18 +63,21 @@ const PostFooter = ({ post, creatorProfile, isProfilePage }) => {
         {/* onClick on the like button to like and unlike the post */}
         <Box onClick={handleLikePost} cursor={"pointer"} fontSize={18}>
           {/* the NotificationsLogo is the filled like logo  */}
-          {!liked ? <NotificationsLogo /> : <UnlikeLogo />}
+          {!isLiked ? <NotificationsLogo /> : <UnlikeLogo />}
         </Box>
         <Box cursor={"pointer"} fontSize={18} onClick={() => commentRef.current.focus()}>
           <CommentLogo />
         </Box>
       </Flex>
+
       <Text fontWeight={600} fontSize={"sm"}>
         {likes} likes
       </Text>
+
       {isProfilePage && (
         <Text fontSize={12} color={'gray'}>Posted, {timeAgo(post.createdAt)}</Text>
       )}
+
       {!isProfilePage && (
         <>
           <Text fontSize={"sm"} fontWeight={700}>
