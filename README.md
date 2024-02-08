@@ -59,10 +59,10 @@ REACT_APP_FIREBASE_APP_ID=your-app-id
 # Installation
 
 (This is for Quick installation without build the project from scratch):
-git clone https://github.com/your-username/instagram-clone.git;
-cd instagram-clone;
-npm install;
-npm run dev;
+git clone https://github.com/your-username/instagram-clone.git .
+cd instagram-clone .
+npm install .
+npm run dev .
 
 # Note
 
