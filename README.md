@@ -1,6 +1,6 @@
 # Instagran Clone Application
 
-This Instagram clone application is developed using React and Firebase, allowing users to sign up and log in either with a custom account or through Google authentication. Once authenticated, users can perform various actions such as creating posts, commenting on posts, liking and unliking posts, following or unfollowing other users, and searching for users.
+This Instagram clone application is developed using React and Firebase, allowing users to sign up and log in either with a custom account or through Google account authentication. Once authenticated, users can perform various actions such as creating and deleting posts, commenting on posts, liking and unliking posts, following or unfollowing other users, view other user profile, Edit own user profile and searching for users.
 
 ## Demo project Link:
 
