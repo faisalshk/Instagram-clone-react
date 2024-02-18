@@ -10,26 +10,28 @@ This Instagram clone application is developed using React and Firebase, allowing
 
 ## User Authentication:
 
-Sign up with email and password
-Log in with email and password
-Log in with Google
+- Sign up with email and password
+- Log in with email and password
+- Log in with Google
 
 ## Post Management:
 
-Create new posts
-Comment on posts
-Like and unlike posts
+- Create new posts
+- Comment on posts
+- Like and unlike posts
 
 ## User Interaction:
 
-Follow other users
-Unfollow users
-Search for users
+- Follow other users
+- Unfollow users
+- Search for users
+- Edit own user profile
+- view other user profile
 
 # Technology used
 
-React: The frontend of the application is built using React, providing a responsive and dynamic user interface.
-Firebase: Firebase is used for user authentication, database management, and storage of images.
+- React: The frontend of the application is built using React, providing a responsive and dynamic user interface.
+- Firebase: Firebase is used for user authentication, database management, and storage of images.
 
 1. setting up react app using vite npm create vite@latest
 2. installing chakra UI
