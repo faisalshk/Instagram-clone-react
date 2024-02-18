@@ -40,20 +40,20 @@ This Instagram clone application is developed using React and Firebase, allowing
 
 ## Firebase setup:
 
-Create a Firebase project on the Firebase console (https://console.firebase.google.com/).
-Enable authentication with email/password and Google sign-in methods.
-Create a Firestore database for storing user data and posts.
-Obtain Firebase configuration details.
+- Create a Firebase project on the Firebase console (https://console.firebase.google.com/).
+- Enable authentication with email/password and Google sign-in methods.
+- Create a Firestore database for storing user data and posts.
+- Obtain Firebase configuration details.
 
 ## .env setup (environment variable)
 
 Create a .env file in the root directory of the project and add Firebase configuration details as environment variables:
-REACT_APP_FIREBASE_API_KEY=your-api-key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
-REACT_APP_FIREBASE_PROJECT_ID=your-project-id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-REACT_APP_FIREBASE_APP_ID=your-app-id
+- REACT_APP_FIREBASE_API_KEY=your-api-key
+- REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
+- REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+- REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+- REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+- REACT_APP_FIREBASE_APP_ID=your-app-id
 
 ## install firebase packages:
 
@@ -65,15 +65,15 @@ REACT_APP_FIREBASE_APP_ID=your-app-id
 # Installation
 
 (This is for Quick installation without building the project from scratch):
-git clone https://github.com/your-username/instagram-clone.git ,
-cd instagram-clone ,
-npm install ,
-npm run dev ,
+- git clone https://github.com/your-username/instagram-clone.git ,
+- cd instagram-clone ,
+- npm install ,
+- npm run dev ,
 
 # Note
 
 make sure to add you localhost or domain on which your application is running in:
-Firebase Authentication -> Settings -> Authorized Domain
+- Firebase Authentication -> Settings -> Authorized Domain
 
 # React + Vite
 
